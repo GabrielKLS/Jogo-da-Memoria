@@ -4,11 +4,11 @@ Um jogo da memória 4x4 de dois jogadores feito no Logisim com circuitos lógico
 
 Trabalho de Circuitos Digitais - Ciência da Computação - Universidade Federal do Cariri
 
-Alunos: <br>
+Discentes: <br>
 João Gabriel de Alencar Fonseca <br>
 Fabricio Elizio Lima dos Santos
 
-Professor: <br>
+Docente: <br>
 Ramon Santos Nepomuceno
 
 
