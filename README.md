@@ -55,10 +55,52 @@ Ramon Santos Nepomuceno
 
 ![Game Loop](./imagens/09.png)
 
-<p></p>
+<p>Cada estado do Game Loop é acionado por uma porta AND tripla, que aguarda o pulso do botão de confirmação e os bits correspondentes ao estado atual. Para facilitar a comparação, os bits do contador responsável pelos estados foram divididos em dois "túneis", E1 e E2.</p>
 
-<p>A execução do estado 0 e do estado 1 são semelhantes. O Game Loop conta com 3 registradores no estado 0 e mais 3 no estado 1. Sendo dois registradores para guardar o X e Y da escolha correspondente outro para guardar o número à ser revelado daquela posição. Os registradores de posição estão confgurados para atualizar na borda de subida e o que guarda o número escondido na borda de descida, com isso é possível preparar as coordenadas e somente depois de prontas utilizar para encontrar o número correspondente.</p>
+![Estado dividido em dois](./imagens/10.png)
+
+<p>Após a porta AND inicial ser acionada, o circuito encontra outra porta AND que exige o resultado de um túnel chamado "Validador". Este túnel é responsável por verificar se as casas selecionadas possuem a mesma posição e se já foram acertadas. O funcionamento detalhado deste circuito será explicado posteriormente.</p>
+
+![Validador](./imagens/13b.png)
+
+<p>A execução dos estados 0 e 1 do Game Loop é semelhante. Em ambos os estados, o circuito conta com três registradores. Dois desses registradores armazenam as coordenadas X e Y da posição selecionada, enquanto o terceiro registra o número revelado na posição correspondente. Os registradores de posição são configurados para atualizar na borda de subida do clock, enquanto o registrador que guarda o número oculto é atualizado na borda de descida. Isso permite que as coordenadas sejam preparadas corretamente antes de serem utilizadas para identificar o número correspondente àquela posição.</p>
+
+![Registradores do Game Loop](./imagens/12.png)
 
 <p>Os registradores responsáveis por armazenar o número revelado de cada posição obtêm esse valor através de um circuito denominado "GV" (Grid to Value). Esse circuito recebe como entrada os valores dos registradores que armazenam as coordenadas X e Y da posição selecionada, permitindo que o número correspondente a essa posição seja recuperado e armazenado no registrador de valor.</p>
 
 <p>O circuito GV (Grid to Value) é, na verdade, um multiplexador que recebe 16 constantes predefinidas, provenientes de outro circuito denominado Secret. Essas constantes representam os números ocultos nas casas do jogo. O multiplexador utiliza as coordenadas X e Y, fornecidas como entradas, para selecionar a constante correspondente à posição no tabuleiro. As coordenadas são combinadas por distribuidores, de maneira semelhante ao processo utilizado para o seletor de LEDs. A saída do multiplexador, então, fornece o número oculto naquela posição específica.</p>
+
+![Grid to Value](./imagens/11.png)
+
+<p>O estado 2 utiliza um Flip-Flop do tipo D para gerar um pulso na borda de descida, o que evita bugs que poderiam impedir a redução do ciclo de 4 para 3 estados totais. Nesse pulso, os registradores dos estados 0 e 1 são resetados, retornando ao estado 0 e finalizando o loop.</p>
+
+![Grid to Value](./imagens/14.png)
+
+<h3>Acertos e Revelação de Casas</h3>
+
+<p>A lógica para o acerto e revelação das casas no jogo envolve o uso de um multiplexador para cada casa. A entrada do multiplexador vem do circuito Secret, enquanto sua seleção é controlada por uma porta OR que recebe três possibilidades:</p>
+
+<p>1 - Casa está sendo revelada pela seleção do primeiro número.</p>
+<p>2 - Casa está sendo revelada pela seleção do segundo número.</p>
+<p>3 - A casa já foi acertada.</p>
+
+<p>Essas três possibilidades ativam o multiplexador, cuja saída é conectada ao display hexadecimal correspondente, permitindo que a casa seja corretamente revelada.</p>
+
+![Revelação de Casa](./imagens/18.png)
+
+<p>Para que um número seja considerado acertado, é utilizado um comparador que verifica a correspondência entre o número armazenado no registrador do primeiro número e o número armazenado no registrador do segundo número no Game Loop, após isso, passa por uma porta AND junto à um túnel que representa o estado 2, dessa forma a comparação só acontece após os dois números serem definidos nos registradores, evitando a comparação de zero com zero.</p>
+
+![Comparação de números](./imagens/19.png)
+
+<p>Quando a casa está revelada e os números nos registradores do primeiro e do segundo número são iguais, uma porta AND é ativada. Isso, por sua vez, aciona um contador de 1bit, que depende do próprio valor de sáida para ser incrementado, garantindo que o contador mantenha o valor 1 até o final do jogo. Alternativamente, isso poderia ser feito utilizando a configuração de transbordamento do contador no Logisim, para que o contador permaneça no mesmo valor ao chegar no final.</p>
+
+![Revelação de Casa](./imagens/20.png)
+
+<p>O padrão de mux e contador se repete 16 vezes, uma para cada casa no tabuleiro.</p>
+
+![Circuto repetido](./imagens/16.png)
+
+<h3>Pontuação e troca de jogador</h3>
+
+<p>A pontuação </p>
