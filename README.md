@@ -101,6 +101,51 @@ Ramon Santos Nepomuceno
 
 ![Circuto repetido](./imagens/16.png)
 
+<p>Decodificador referente à possibilidade 1 da porta OR dos MUX. Este decodificador recebe como entrada as coordenadas do primeiro número e é habilitado somente no estado 1 e 2, onde o primeiro número escolhido já foi guardado e deve ser revelado.</p>
+
+![Decoder 1](./imagens/30.png)
+
+<p>Decodificador referente à possibilidade 2 da porta OR dos MUX. Este decodificador recebe como entrada as coordenadas do segundo número e é habilitado somente no estado 2, onde o segundo número escolhido já foi guardado e deve ser revelado.</p>
+
+![Decoder 2](./imagens/31.png)
+
+<p>Circuito Secret referente ao valor escondido na entrada de cada MUX.</p>
+
+![Circuto secret](./imagens/32.png)
+
+![Circuto secret](./imagens/33.png)
+
+<h3>Validador</h3>
+
+<p>O validador é responsável por comparar os números que já foram acertados com a posição atual do LED de seleção através de várias portas AND entre túneis dos contadores de acertados e a posição atual em uma porta OR de 16 entradas. Dessa forma, ele consegue identificar se a casa selecionada já foi acertada anteriormente. Além disso, o validador também considera se o segundo número selecionado está na mesma posição que o primeiro, ou seja, se os dois números foram selecionados na mesma casa.</p>
+
+![Circuto secret](./imagens/34.png)
+
+<p>Para verificar se o segundo número selecionado está na mesma posição que o primeiro, basta usar dois comparadores: um para comparar o valor de Y do primeiro número com o Y da seleção atual, e outro para comparar o valor de X de ambos. Caso os valores de X e Y coincidam e o jogo não esteja no estado 0, a condição é atendida, indicando que o segundo número foi selecionado na mesma casa que o primeiro.</p>
+
+![Circuto secret](./imagens/23.png)
+
 <h3>Pontuação e troca de jogador</h3>
 
-<p>A pontuação </p>
+<p>Cada jogador tem sua pontuação guardado em um contador.</p>
+
+![Pontuações](./imagens/24.png)
+
+<p>Caso os números revelados sejam iguais, duas portas AND verificam o jogador atual e acrescentam um ponto no respectivo contador.</p>
+
+![Acréscimo de pontos](./imagens/22.png)
+
+<p>O contador de pontos envia sua saída para display hexadecimal correspondente.</p>
+
+![Display de Pontos](./imagens/29.png)
+
+<p>Um contador de 1 bit guarda o jogador atual. Sendo 0 o jogador A e 1 o jogador B.</p>
+
+![Contador jogadores](./imagens/25.png)
+
+<p>O contador do jogador atual é acrescentado assim que o jogo se encontra no estado 2 junto com os túneis referentes aos estados atuais (Usados apenas para simplificar verificações). Por ser um contador de 1 bit ele sempre troca entre 1 e 0, fazendo o turno alternar a cada rodada.</p>
+
+![Estados](./imagens/28.png)
+
+<p>Vale ressaltar que os 2 LEDs que indicam o jogador atual estão conectados no mesmo contador porém o LED do jogador B está configurado para acender em baixa.</p>
+
