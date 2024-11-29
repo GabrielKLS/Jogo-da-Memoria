@@ -41,4 +41,24 @@ Ramon Santos Nepomuceno
 
 <p>Com as posições armazenadas nos contadores, é possível gerar 16 combinações únicas entre as saídas X e Y, cada uma correspondente a uma posição no tabuleiro. Isso é realizado por meio de um decodificador, onde as saídas X e Y são combinadas e enviadas às entradas de seleção do decodificador através de distribuidores. Cada saída do decodificador está conectada a um LED de seleção, que indica a posição ativa no tabuleiro. Assim, ao pressionar os botões direcionais, as posições nos contadores são atualizadas, e o LED correspondente à nova posição é aceso pelo decodificador.</p>
 
-![Decodificador responsável por acender os LEDs](./imagens/04.png)
+![Decodificador responsável por acender os LEDs](./imagens/04b.png)
+
+<h3>Game Loop e a Maquina de Estados Finitos</h3>
+
+<p>O Game Loop é o componente responsável por garantir a execução ordenada das ações no jogo. Ele funciona como uma máquina de estados, utilizando um contador de 2 bits limitado de 0 a 2, o que resulta em três estados possíveis. Cada estado representa uma fase distinta do jogo, assegurando que as etapas sejam realizadas na sequência correta.</p>
+
+<p>Estado 0: É o estado inicial de cada turno, onde o jogador pode selecionar e confirmar o primeiro número.</p>
+
+<p>Estado 1: O jogador pode selecionar e confirmar o segundo número. Após isso, compara ambos e acrescenta um ponto ao jogador caso sejam iguais.</p>
+
+<p>Estado 2: Reseta variáveis temporárias e troca o turno do jogador. Após isso retorna ao estado 0.</p>
+
+![Game Loop](./imagens/09.png)
+
+<p></p>
+
+<p>A execução do estado 0 e do estado 1 são semelhantes. O Game Loop conta com 3 registradores no estado 0 e mais 3 no estado 1. Sendo dois registradores para guardar o X e Y da escolha correspondente outro para guardar o número à ser revelado daquela posição. Os registradores de posição estão confgurados para atualizar na borda de subida e o que guarda o número escondido na borda de descida, com isso é possível preparar as coordenadas e somente depois de prontas utilizar para encontrar o número correspondente.</p>
+
+<p>Os registradores responsáveis por armazenar o número revelado de cada posição obtêm esse valor através de um circuito denominado "GV" (Grid to Value). Esse circuito recebe como entrada os valores dos registradores que armazenam as coordenadas X e Y da posição selecionada, permitindo que o número correspondente a essa posição seja recuperado e armazenado no registrador de valor.</p>
+
+<p>O circuito GV (Grid to Value) é, na verdade, um multiplexador que recebe 16 constantes predefinidas, provenientes de outro circuito denominado Secret. Essas constantes representam os números ocultos nas casas do jogo. O multiplexador utiliza as coordenadas X e Y, fornecidas como entradas, para selecionar a constante correspondente à posição no tabuleiro. As coordenadas são combinadas por distribuidores, de maneira semelhante ao processo utilizado para o seletor de LEDs. A saída do multiplexador, então, fornece o número oculto naquela posição específica.</p>
