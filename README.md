@@ -125,6 +125,8 @@ Ramon Santos Nepomuceno
 
 ![Circuto secret](./imagens/23.png)
 
+<p>Esse sistema, ao ser utilizado para bloquear a execução de estados no Game Loop, impede que o jogo prossiga caso o jogador tente selecionar uma posição inválida. Se isso ocorrer, o jogador será forçado a mudar a seleção para uma posição válida, permitindo que o jogo continue normalmente após a troca.</p>
+
 <h3>Pontuação e troca de jogador</h3>
 
 <p>Cada jogador tem sua pontuação guardado em um contador.</p>
@@ -148,4 +150,16 @@ Ramon Santos Nepomuceno
 ![Estados](./imagens/28.png)
 
 <p>Vale ressaltar que os 2 LEDs que indicam o jogador atual estão conectados no mesmo contador porém o LED do jogador B está configurado para acender em baixa.</p>
+
+<h3>Resultado do Jogo</h3>
+
+<p>O resultado do jogo pode ser determinado como vitória do jogador A, vitória do jogador B ou empate. Para isso, é utilizado um comparador que verifica a soma dos pontos de cada jogador e a compara com o número 8, indicando que o jogo terminou e atingiu a pontuação máxima. Após isso, outro comparador é usado para verificar os pontos de cada jogador. Combinando essa verificação com portas AND, o sistema determina se o jogo já acabou e acende o LED correspondente à vitória do jogador ou ao empate.</p>
+
+![Estados](./imagens/26.png)
+
+<p>LEDs de resultado.</p>
+
+![Estados](./imagens/27.png)
+
+
 
